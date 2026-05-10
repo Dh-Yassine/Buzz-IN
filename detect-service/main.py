@@ -34,7 +34,12 @@ def ensure_loaded() -> None:
     if model is not None and processor is not None:
         return
     try:
-        processor = AutoImageProcessor.from_pretrained(MODEL_NAME, use_fast=True)
+        processor = AutoImageProcessor.from_pretrained(MODEL_NAME, backend="torchvision")
+    except TypeError:
+        try:
+            processor = AutoImageProcessor.from_pretrained(MODEL_NAME, use_fast=True)
+        except Exception:
+            processor = AutoImageProcessor.from_pretrained(MODEL_NAME)
     except Exception:
         processor = AutoImageProcessor.from_pretrained(MODEL_NAME)
     model = SiglipForImageClassification.from_pretrained(MODEL_NAME)

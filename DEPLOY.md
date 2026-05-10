@@ -31,7 +31,7 @@ This serves `POST /detect` for scan (multipart field **`image`**).
 3. Render reads **`render.yaml`** at the repo root and proposes a **Web Service** `buzzin-detect` (Docker).
 4. Create the blueprint and wait for the first deploy.
 
-Build can take **15–30+ minutes** (PyTorch + **torchvision** + Hugging Face deps). If the build fails, open the build logs.
+Build can take **15–30+ minutes** on first deploy (CPU PyTorch + torchvision + Hugging Face deps). The Dockerfile installs **CPU-only** PyTorch so Render free tier does not pull multi‑GB CUDA stacks. If the build fails, open the build logs.
 
 ### Option B — Manual Docker service
 
