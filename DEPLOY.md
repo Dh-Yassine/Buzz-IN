@@ -85,6 +85,8 @@ Confirm settings (or set manually):
 | Build command | `npm install && npm run build -w web` |
 | Publish directory | `web/dist` |
 
+The site pins **Vite 6** (not Vite 8) so Netlify’s Linux builders do not need Rolldown’s native optional bindings (`@rolldown/binding-linux-x64-gnu`), which often fail when the lockfile was produced on Windows.
+
 3. **Deploy site.**
 
 ### Environment variables (Netlify UI)

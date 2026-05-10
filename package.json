@@ -2,6 +2,10 @@
   "name": "bin-recycle",
   "private": true,
   "workspaces": ["web", "server"],
+  "overrides": {
+    "vite": "6.4.2",
+    "@vitejs/plugin-react": "5.1.4"
+  },
   "scripts": {
     "dev": "concurrently -k -n api,web -c green,blue \"npm run dev -w server\" \"npm run dev -w web\"",
     "dev:with-detect": "concurrently -k -n api,web,detect -c green,blue,yellow \"npm run dev -w server\" \"npm run dev -w web\" \"npm run dev:detect-svc\"",
