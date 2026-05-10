@@ -1,0 +1,13 @@
+# Render Blueprint — deploy the Python detect API (not the Vite app).
+# After deploy: set BUZZ_DETECT_CORS_ORIGINS=https://your-app.vercel.app
+# and in your frontend env set VITE_DETECT_API_URL=https://<this-service>.onrender.com/detect
+services:
+  - type: web
+    name: buzzin-detect
+    runtime: docker
+    dockerfilePath: ./detect-service/Dockerfile
+    dockerContext: ./detect-service
+    plan: free
+    envVars:
+      - key: BUZZ_DETECT_CORS_ORIGINS
+        sync: false

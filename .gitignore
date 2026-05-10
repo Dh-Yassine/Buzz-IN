@@ -1,0 +1,19 @@
+node_modules
+dist
+.DS_Store
+
+# Secrets — never commit
+.env
+.env.*
+!.env.example
+web/.env
+web/.env.*
+!web/.env.example
+detect-service/.env
+__pycache__/
+*.py[cod]
+*.pyc
+*.log
+server/.wrangler
+web/dist
+server/.dev.vars

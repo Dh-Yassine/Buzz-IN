@@ -1,0 +1,123 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Fredoka", ui-rounded, system-ui, sans-serif;
+  --font-display: "Fredoka", ui-rounded, system-ui, sans-serif;
+
+  --color-buzz-cream: #f2f1e8;
+  --color-buzz-sage: #b4c49a;
+  --color-buzz-sage-deep: #9aaf82;
+  --color-buzz-forest: #3d5a45;
+  --color-buzz-mustard: #d9b36a;
+  --color-buzz-panel: rgb(204 191 160 / 0.72);
+  --color-buzz-honey: #f4e4a6;
+
+  --animate-buzz-float: buzz-float 4s ease-in-out infinite;
+  --animate-buzz-bounce: buzz-bounce 2.2s ease-in-out infinite;
+  --animate-buzz-wiggle: buzz-wiggle 1.8s ease-in-out infinite;
+  --animate-buzz-twinkle: buzz-twinkle 2.6s ease-in-out infinite;
+  --animate-buzz-shimmer: buzz-shimmer 8s ease-in-out infinite;
+}
+
+@keyframes buzz-float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-5deg);
+  }
+  50% {
+    transform: translateY(-12px) rotate(5deg);
+  }
+}
+
+@keyframes buzz-bounce {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+  40% {
+    transform: translateY(-5px) scale(1.06);
+  }
+  70% {
+    transform: translateY(2px) scale(0.98);
+  }
+}
+
+@keyframes buzz-wiggle {
+  0%,
+  100% {
+    transform: rotate(-8deg);
+  }
+  50% {
+    transform: rotate(8deg);
+  }
+}
+
+@keyframes buzz-twinkle {
+  0%,
+  100% {
+    opacity: 0.25;
+    transform: scale(0.65);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.15);
+  }
+}
+
+@keyframes buzz-shimmer {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes buzz-dash {
+  to {
+    stroke-dashoffset: -80;
+  }
+}
+
+.font-display {
+  font-family: var(--font-display), var(--font-sans), system-ui, sans-serif;
+}
+
+.buzz-float {
+  animation: var(--animate-buzz-float);
+}
+
+.buzz-bounce {
+  animation: var(--animate-buzz-bounce);
+}
+
+.buzz-wiggle {
+  animation: var(--animate-buzz-wiggle);
+}
+
+.buzz-twinkle {
+  animation: var(--animate-buzz-twinkle);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .buzz-float,
+  .buzz-bounce,
+  .buzz-wiggle,
+  .buzz-twinkle {
+    animation: none;
+  }
+
+  .buzz-dash {
+    animation: none;
+  }
+}
+
+.buzz-dash {
+  stroke-dasharray: 10 12;
+  animation: buzz-dash 14s linear infinite;
+}
+
+body {
+  @apply min-h-dvh bg-buzz-cream font-sans text-buzz-forest antialiased;
+}

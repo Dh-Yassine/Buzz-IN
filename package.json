@@ -1,0 +1,17 @@
+{
+  "name": "bin-recycle",
+  "private": true,
+  "workspaces": ["web", "server"],
+  "scripts": {
+    "dev": "concurrently -k -n api,web -c green,blue \"npm run dev -w server\" \"npm run dev -w web\"",
+    "dev:with-detect": "concurrently -k -n api,web,detect -c green,blue,yellow \"npm run dev -w server\" \"npm run dev -w web\" \"npm run dev:detect-svc\"",
+    "dev:detect-svc": "cd detect-service && python -m uvicorn main:app --reload --host 127.0.0.1 --port 8788",
+    "dev:web": "npm run dev -w web",
+    "dev:api": "npm run dev -w server",
+    "build": "npm run build -w web",
+    "deploy:api": "npm run deploy -w server"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}

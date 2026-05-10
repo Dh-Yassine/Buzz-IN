@@ -1,0 +1,5 @@
+# Copy to .dev.vars (gitignored) for local `wrangler dev`
+JWT_SECRET=change-me-to-a-long-random-string-at-least-32-chars
+DROP_SECRET=another-long-random-string-for-qr-drop-tokens
+STATION_BEARER=station-shared-secret-for-mint-endpoint
+ALLOW_DEV_MINT=true

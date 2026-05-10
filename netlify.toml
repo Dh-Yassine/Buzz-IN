@@ -1,0 +1,10 @@
+# Deploy static SPA from monorepo root (workspace `web`).
+# Netlify: Site settings → Build & deploy can leave defaults if this file is at repo root.
+[build]
+  command = "npm install && npm run build -w web"
+  publish = "web/dist"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

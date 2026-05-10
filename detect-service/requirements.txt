@@ -1,0 +1,9 @@
+# Recycling-Net-11 (SigLIP2) — https://huggingface.co/prithivMLmods/Recycling-Net-11
+# Use Python 3.10+ locally for fewer toolchain quirks (3.11 recommended; Dockerfile uses 3.11).
+# Core API only — see requirements-optional.txt for Gradio UI (Python 3.9: gradio<5).
+fastapi>=0.115.0
+uvicorn[standard]>=0.32.0
+python-multipart>=0.0.9
+transformers>=4.50.0
+torch>=2.0.0
+pillow>=10.0.0

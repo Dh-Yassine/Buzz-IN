@@ -1,0 +1,14 @@
+name = "buzzin-api"
+main = "src/index.ts"
+compatibility_date = "2025-05-01"
+
+[vars]
+ENVIRONMENT = "development"
+
+# Replace database_id after: npx wrangler d1 create buzzin-db
+# Then: npx wrangler d1 migrations apply buzzin-db --remote
+# Secrets (production): wrangler secret put JWT_SECRET && wrangler secret put DROP_SECRET && wrangler secret put STATION_BEARER
+[[d1_databases]]
+binding = "DB"
+database_name = "buzzin-db"
+database_id = "00000000-0000-0000-0000-000000000001"

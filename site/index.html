@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Buzz-In</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header class="top">
+    <h1>Buzz-In</h1>
+    <p class="muted">Campus waste — minimal prototype</p>
+  </header>
+
+  <main class="stack">
+    <section class="card">
+      <h2>Flow (corrected)</h2>
+      <ol class="steps">
+        <li><strong>Scan item</strong> — camera + recognition → app shows which bin to use.</li>
+        <li><strong>Drop</strong> — station sensors confirm disposal (hardware / backend later).</li>
+        <li><strong>Claim points</strong> — you scan the <strong>QR shown on the machine</strong>. That QR carries drop metadata; the app adds Buzz-Points to your account (stub: local only for now).</li>
+      </ol>
+      <p class="muted small">Sorting = item scan + guidance. Points = separate machine QR after drop.</p>
+    </section>
+
+    <nav class="actions">
+      <a class="btn primary" href="scan.html">Scan item</a>
+      <a class="btn" href="claim.html">Claim points (machine QR)</a>
+    </nav>
+  </main>
+
+  <script src="js/storage.js"></script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Scan item — Buzz-In</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header class="top bar">
+    <a href="index.html" class="back">← Home</a>
+    <h1>Scan item</h1>
+  </header>
+
+  <main class="stack narrow">
+    <p class="muted">Recognition is mocked until the API exists. Camera preview is optional (browser permission).</p>
+
+    <div class="card">
+      <label class="label">Camera preview</label>
+      <video id="preview" playsinline muted autoplay class="hidden"></video>
+      <button type="button" class="btn" id="btnCamera">Start camera</button>
+      <button type="button" class="btn ghost" id="btnStopCamera">Stop</button>
+    </div>
+
+    <div class="card">
+      <label class="label">Simulate recognition (demo)</label>
+      <div class="row-wrap">
+        <button type="button" class="btn small" data-mock="PET plastic bottle">PET bottle</button>
+        <button type="button" class="btn small" data-mock="Architecture trace paper">Trace paper</button>
+        <button type="button" class="btn small" data-mock="Aluminum can">Can (metal)</button>
+        <button type="button" class="btn small" data-mock="AA battery">Battery</button>
+      </div>
+    </div>
+
+    <div id="result" class="card hidden">
+      <h2>Guidance</h2>
+      <p><strong id="itemLabel"></strong></p>
+      <p>Use bin: <strong id="binName"></strong></p>
+      <p class="muted small">After you drop it, go to <a href="claim.html">Claim points</a> and scan the QR on the station screen.</p>
+    </div>
+  </main>
+
+  <script src="js/storage.js"></script>
+  <script src="js/scan.js"></script>
+</body>
+</html>

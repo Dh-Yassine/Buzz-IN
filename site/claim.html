@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Claim points — Buzz-In</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header class="top bar">
+    <a href="index.html" class="back">← Home</a>
+    <h1>Claim points</h1>
+  </header>
+
+  <main class="stack narrow">
+    <p class="muted">Scan the QR code <strong>shown on the machine</strong> after disposal. Payload is parsed in the browser (no server yet).</p>
+
+    <div class="card">
+      <div id="qr-reader" class="qr-box"></div>
+      <button type="button" class="btn" id="btnStartQr">Start QR scanner</button>
+      <button type="button" class="btn ghost" id="btnStopQr">Stop</button>
+    </div>
+
+    <div class="card">
+      <label class="label">Or paste demo payload (same string the machine would encode in QR)</label>
+      <textarea id="pastePayload" rows="3" placeholder='{"v":1,"pts":1,"item":"PET bottle","bin":"plastic"}'></textarea>
+      <button type="button" class="btn primary" id="btnPaste">Apply pasted payload</button>
+    </div>
+
+    <p class="muted small">Demo: <button type="button" class="linklike" id="btnFillDemo">fill sample JSON</button></p>
+
+    <div id="claimMsg" class="banner hidden" role="status"></div>
+
+    <div class="card">
+      <h2>Your balance (this device only)</h2>
+      <p class="points"><span id="balance">0</span> Buzz-Points</p>
+    </div>
+  </main>
+
+  <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/claim.js"></script>
+</body>
+</html>
