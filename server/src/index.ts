@@ -184,6 +184,11 @@ app.post("/auth/register", async (c) => {
   if (!email.includes("@")) return c.json({ error: "invalid_email" }, 400);
   if (password.length < 8) return c.json({ error: "password_too_short" }, 400);
 
+  const jwtSecret = c.env.JWT_SECRET;
+  if (typeof jwtSecret !== "string" || jwtSecret.length < 16) {
+    return c.json({ error: "jwt_secret_missing" }, 503);
+  }
+
   const id = crypto.randomUUID();
   const hash = await hashPassword(password);
   const now = new Date().toISOString();
@@ -213,6 +218,11 @@ app.post("/auth/login", async (c) => {
   const email = (body.email ?? "").trim().toLowerCase();
   const password = body.password ?? "";
   if (!email || !password) return c.json({ error: "invalid_body" }, 400);
+
+  const jwtSecret = c.env.JWT_SECRET;
+  if (typeof jwtSecret !== "string" || jwtSecret.length < 16) {
+    return c.json({ error: "jwt_secret_missing" }, 503);
+  }
 
   const row = await c.env.DB.prepare(
     "SELECT id, password_hash, display_name FROM users WHERE email = ? LIMIT 1",

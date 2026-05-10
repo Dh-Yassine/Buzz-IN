@@ -12,6 +12,9 @@ function humanize(err: string): string {
   if (err === "api_html_response") {
     return "The API URL returned a web page instead of JSON. Fix VITE_API_BASE so it points to your Buzz-IN Worker, redeploy, and try again.";
   }
+  if (err === "jwt_secret_missing") {
+    return "The API is not fully configured. On your PC, in the server folder, run: npx wrangler secret put JWT_SECRET (use a long random string), then try again.";
+  }
   return err.replace(/_/g, " ");
 }
 

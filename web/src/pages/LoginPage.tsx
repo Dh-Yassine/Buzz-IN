@@ -11,6 +11,9 @@ function humanize(err: string): string {
   if (err === "api_html_response") {
     return "The API URL returned HTML (often Netlify 404). Fix VITE_API_BASE to your Worker URL and redeploy.";
   }
+  if (err === "jwt_secret_missing") {
+    return "The API is not fully configured. In the project server folder run: npx wrangler secret put JWT_SECRET (long random value), then try again.";
+  }
   return err.replace(/_/g, " ");
 }
 
