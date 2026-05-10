@@ -61,19 +61,25 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         if (!cancelled) setBootstrapping(false);
         return;
       }
-      const me = await apiMe(saved.token);
-      if (cancelled) return;
-      if (!me) {
+      try {
+        const me = await apiMe(saved.token);
+        if (cancelled) return;
+        if (!me) {
+          clearPersisted();
+          setToken(null);
+          setUser(null);
+          return;
+        }
+        setToken(saved.token);
+        setUser(me.user);
+        persist(saved.token, me.user);
+      } catch {
         clearPersisted();
         setToken(null);
         setUser(null);
-        setBootstrapping(false);
-        return;
+      } finally {
+        if (!cancelled) setBootstrapping(false);
       }
-      setToken(saved.token);
-      setUser(me.user);
-      persist(saved.token, me.user);
-      setBootstrapping(false);
     })();
     return () => {
       cancelled = true;

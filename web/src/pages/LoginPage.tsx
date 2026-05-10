@@ -5,6 +5,12 @@ import { useAuth } from "../context/AuthContext";
 function humanize(err: string): string {
   if (err === "invalid_credentials") return "Email or password is incorrect.";
   if (err === "login_failed") return "Could not sign in.";
+  if (err === "api_not_configured") {
+    return "Hosted API is not linked. In Netlify set VITE_API_BASE to your Cloudflare Worker URL, then redeploy.";
+  }
+  if (err === "api_html_response") {
+    return "The API URL returned HTML (often Netlify 404). Fix VITE_API_BASE to your Worker URL and redeploy.";
+  }
   return err.replace(/_/g, " ");
 }
 

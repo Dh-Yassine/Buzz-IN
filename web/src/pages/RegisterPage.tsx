@@ -6,6 +6,12 @@ function humanize(err: string): string {
   if (err === "password_too_short") return "Password must be at least 8 characters.";
   if (err === "email_in_use") return "That email is already registered.";
   if (err === "invalid_email") return "Enter a valid university email.";
+  if (err === "api_not_configured") {
+    return "Hosted API is not linked. In Netlify → Site configuration → Environment variables, set VITE_API_BASE to your Cloudflare Worker URL (no trailing slash), then redeploy.";
+  }
+  if (err === "api_html_response") {
+    return "The API URL returned a web page instead of JSON. Fix VITE_API_BASE so it points to your Buzz-IN Worker, redeploy, and try again.";
+  }
   return err.replace(/_/g, " ");
 }
 

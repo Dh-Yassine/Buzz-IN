@@ -11,4 +11,4 @@ ENVIRONMENT = "development"
 [[d1_databases]]
 binding = "DB"
 database_name = "buzzin-db"
-database_id = "00000000-0000-0000-0000-000000000001"
+database_id = "a509961a-160a-432b-8ae6-f21b367090c0"
