@@ -31,7 +31,8 @@ app.use(
   }),
 );
 
-const PBKDF2_ITER = 120_000;
+/** WebCrypto on Workers caps PBKDF2 iterations at 100k (120k fails at hash time). */
+const PBKDF2_ITER = 100_000;
 
 function bufToB64(buf: ArrayBuffer): string {
   const bytes = new Uint8Array(buf);
@@ -177,40 +178,47 @@ const userAuth: MiddlewareHandler<{ Bindings: Env; Variables: Variables }> = asy
 app.get("/health", (c) => c.json({ ok: true }));
 
 app.post("/auth/register", async (c) => {
-  const body = await c.req.json<{ email?: string; password?: string; displayName?: string }>();
-  const email = (body.email ?? "").trim().toLowerCase();
-  const password = body.password ?? "";
-  const displayName = (body.displayName ?? "").trim() || email.split("@")[0] || "Student";
-  if (!email.includes("@")) return c.json({ error: "invalid_email" }, 400);
-  if (password.length < 8) return c.json({ error: "password_too_short" }, 400);
-
-  const jwtSecret = c.env.JWT_SECRET;
-  if (typeof jwtSecret !== "string" || jwtSecret.length < 16) {
-    return c.json({ error: "jwt_secret_missing" }, 503);
-  }
-
-  const id = crypto.randomUUID();
-  const hash = await hashPassword(password);
-  const now = new Date().toISOString();
-
   try {
-    await c.env.DB.prepare(
-      "INSERT INTO users (id, email, password_hash, display_name, created_at) VALUES (?, ?, ?, ?, ?)",
-    )
-      .bind(id, email, hash, displayName, now)
-      .run();
-    await c.env.DB.prepare("INSERT INTO wallets (user_id, balance) VALUES (?, 0)").bind(id).run();
-  } catch (e) {
-    const msg = e instanceof Error ? e.message : String(e);
-    if (msg.includes("UNIQUE")) return c.json({ error: "email_in_use" }, 409);
-    throw e;
-  }
+    const body = await c.req.json<{ email?: string; password?: string; displayName?: string }>();
+    const email = (body.email ?? "").trim().toLowerCase();
+    const password = body.password ?? "";
+    const displayName = (body.displayName ?? "").trim() || email.split("@")[0] || "Student";
+    if (!email.includes("@")) return c.json({ error: "invalid_email" }, 400);
+    if (password.length < 8) return c.json({ error: "password_too_short" }, 400);
 
-  const token = await signUserAccess(c.env, id);
-  return c.json({
-    token,
-    user: { id, email, displayName },
-  });
+    const jwtSecret = c.env.JWT_SECRET;
+    if (typeof jwtSecret !== "string" || jwtSecret.length < 16) {
+      return c.json({ error: "jwt_secret_missing" }, 503);
+    }
+
+    const id = crypto.randomUUID();
+    const hash = await hashPassword(password);
+    const now = new Date().toISOString();
+
+    try {
+      await c.env.DB.prepare(
+        "INSERT INTO users (id, email, password_hash, display_name, created_at) VALUES (?, ?, ?, ?, ?)",
+      )
+        .bind(id, email, hash, displayName, now)
+        .run();
+      await c.env.DB.prepare("INSERT INTO wallets (user_id, balance) VALUES (?, 0)").bind(id).run();
+    } catch (e) {
+      const msg = e instanceof Error ? e.message : String(e);
+      if (msg.includes("UNIQUE")) return c.json({ error: "email_in_use" }, 409);
+      throw e;
+    }
+
+    const token = await signUserAccess(c.env, id);
+    return c.json({
+      token,
+      user: { id, email, displayName },
+    });
+  } catch (e) {
+    const detail = e instanceof Error ? e.message : String(e);
+    console.error("[auth/register]", detail);
+    const dev = (c.env.ENVIRONMENT ?? "") !== "production";
+    return c.json({ error: "internal_error", ...(dev ? { detail } : {}) }, 500);
+  }
 });
 
 app.post("/auth/login", async (c) => {
