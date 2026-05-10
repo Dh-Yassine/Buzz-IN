@@ -52,6 +52,8 @@ In Render → your Web Service → **Environment**:
 
 Do **not** set `PORT` yourself — Render injects it.
 
+**Optional:** Add **`HF_TOKEN`** (a [Hugging Face read token](https://huggingface.co/settings/tokens)) so Hub downloads are faster and less likely to hit anonymous rate limits during deploy or first request. Same variable is respected at runtime by `huggingface_hub`.
+
 ### URL you need later
 
 After deploy, Render shows something like:

@@ -11,3 +11,6 @@ services:
     envVars:
       - key: BUZZ_DETECT_CORS_ORIGINS
         sync: false
+      # Optional: higher HF Hub rate limits + faster downloads — https://huggingface.co/settings/tokens
+      - key: HF_TOKEN
+        sync: false

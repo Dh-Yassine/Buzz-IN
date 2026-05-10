@@ -13,6 +13,10 @@ RUN pip install --no-cache-dir --upgrade pip \
  && grep -v '^[[:space:]]*#' requirements.txt | grep -v '^[[:space:]]*$' | grep -v '^torch' > /tmp/req-notorch.txt \
  && pip install --no-cache-dir -r /tmp/req-notorch.txt
 
+COPY prefetch_model.py .
+# Bake public model weights into the image (avoids HF download during cold start; optional HF_TOKEN at runtime still helps).
+RUN python prefetch_model.py
+
 COPY main.py .
 
 # Render sets PORT; default 8788 for local docker run.
