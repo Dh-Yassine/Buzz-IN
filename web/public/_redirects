@@ -1,0 +1,2 @@
+# SPA: unmatched paths -> index.html (real files like /assets/* still win)
+/*    /index.html   200
